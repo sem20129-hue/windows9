@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Microsoft Windows 9</title>
+<link rel="stylesheet" href="css/win9.css">
+</head>
+<body>
+
+<div id="crt"></div>
+
+<div id="stageWrap">
+<div id="screen">
+
+<!-- ============ 1. BIOS POST ============ -->
+<div class="stage on" id="st-bios">
+  <div class="post">
+    <pre id="postText"></pre>
+    <div id="postHint" class="post-hint">Нажмите <b>DEL</b> для входа в SETUP</div>
+  </div>
+</div>
+
+<!-- ============ 2. Стартовое меню (F8) ============ -->
+<div class="stage" id="st-bootmenu">
+  <div class="post">
+    <div class="w9-logo">Microsoft <span>Windows</span> 9</div>
+    <div class="bootmenu-title">Стартовое меню Microsoft Windows 9</div>
+    <ul class="bootmenu" id="bootmenuList"></ul>
+    <div class="post-hint">Используйте <b>↑</b> <b>↓</b> и <b>Enter</b></div>
+  </div>
+</div>
+
+<!-- ============ 3. Установка ============ -->
+<div class="stage stage-blue" id="st-setup">
+  <div class="setup-wrap" id="setupWrap"></div>
+</div>
+
+<!-- ============ 4. Первая настройка ============ -->
+<div class="stage stage-blue" id="st-oobe">
+  <div class="setup-wrap" id="oobeWrap"></div>
+</div>
+
+<!-- ============ 5. MS-DOS ============ -->
+<div class="stage" id="st-dos">
+  <pre id="dosText" class="dos"></pre>
+  <span id="dosPrompt" class="dos"></span><span id="dosCursor" class="dos-cursor"></span>
+  <input id="dosInput" class="dos-input" autocomplete="off" spellcheck="false">
+</div>
+
+<!-- ============ 6. Рабочий стол ============ -->
+<div class="stage" id="st-desktop">
+  <div id="desktop">
+    <div id="deskIcons"></div>
+    <div id="winLayer"></div>
+    <div id="menuLayer"></div>
+  </div>
+  <div id="taskbar">
+    <button id="startBtn" class="start-btn"><span class="start-flag"></span>Пуск</button>
+    <div class="tb-sep"></div>
+    <div id="quickLaunch"></div>
+    <div class="tb-sep"></div>
+    <div id="taskList"></div>
+    <div id="tray">
+      <span id="printStatus" class="tray-print" hidden><span class="ico-print"></span>Печать...</span>
+      <span id="trayIcons"></span>
+      <span id="trayClock" title="">15:04</span>
+    </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<div id="hint">
+  <b>ESC</b> — пропустить загрузку &nbsp;·&nbsp; <b>F5</b> — обновить &nbsp;·&nbsp;
+  <b>Ctrl+Esc</b> — Пуск &nbsp;·&nbsp; <b>Alt+F4</b> — закрыть окно
+</div>
+
+<script src="js/core.js"></script>
+<script src="js/boot.js"></script>
+<script src="js/wm.js"></script>
+<script src="js/apps.js"></script>
+<script src="js/dos.js"></script>
+<script src="js/games.js"></script>
+<script src="js/browser.js"></script>
+<script src="js/google.js"></script>
+</body>
+</html>

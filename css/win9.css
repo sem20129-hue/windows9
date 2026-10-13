@@ -107,9 +107,15 @@ ul.bootmenu li.sel{background:#c0c0c0;color:#000}
   box-shadow:inset -1px -1px 0 var(--shade),inset 1px 1px 0 var(--light);
   cursor:default;
 }
+/* В Windows 95 кнопка под курсором не темнеет, а получает жирную рамку:
+   в Windows 95 hover просто слегка «приподнимал» кнопку. Делаем тонкую
+   рамку + лёгкий сдвиг тени, как в оригинале. */
+.btn:hover{border-color:var(--light) var(--hilite) var(--shade) var(--light);
+  box-shadow:inset -1px -1px 0 var(--hilite),inset 1px 1px 0 #fff,1px 1px 0 rgba(0,0,0,.12)}
 .btn:active{border-color:var(--shade) var(--hilite) var(--hilite) var(--shade);
   box-shadow:inset 1px 1px 0 var(--dark),inset -1px -1px 0 var(--light);padding:1px 9px 0 11px}
 .btn.def{outline:1px solid #000;outline-offset:0}
+.btn.def:hover{outline:1px solid #000}
 .btn.def:active{outline:1px solid #000}
 .btn:disabled{color:var(--shade);text-shadow:1px 1px 0 var(--hilite)}
 .btn.sm{min-width:0;height:19px;padding:0 7px}
@@ -151,6 +157,14 @@ select.field{height:22px;padding:1px 2px}
 
 /* ---------- установка / OOBE ---------- */
 .setup-wrap{position:absolute;inset:0;color:#fff;font-size:15px;padding:26px 40px;line-height:1.55;overflow:hidden}
+/* Синий экран увеличивает текст, но кнопки и поля остаются системными 11 px:
+   при 15 px надпись в кнопке 23 px сидела впритык и выглядела неопрятно. */
+.setup-wrap .btn,
+.setup-wrap input,
+.setup-wrap select,
+.setup-wrap textarea,
+.setup-wrap .numpad .btn{font-size:11px}
+.setup-wrap .btn{height:23px;padding:0 10px}
 .setup-wrap h1{font-size:22px;font-weight:bold;margin-bottom:14px}
 .setup-wrap p{max-width:620px;margin-bottom:12px}
 .setup-wrap .blue-box{
@@ -386,6 +400,9 @@ select.field{height:22px;padding:1px 2px}
 .scroll.v{width:16px;top:0;bottom:16px;right:0}
 .scroll.h{height:16px;left:0;right:16px;bottom:0}
 .scroll .btn{position:absolute;width:16px;height:16px;min-width:0;padding:0;border-radius:0}
+/* у стрелок полосы прокрутки в Win95 рамки нет — отключаем им hover */
+.scroll .btn:hover{border-color:var(--hilite) var(--dark) var(--dark) var(--hilite);
+  box-shadow:inset -1px -1px 0 var(--shade),inset 1px 1px 0 var(--light);padding:0}
 .scroll.v .btn.up{top:0;left:0}
 .scroll.v .btn.dn{bottom:0;left:0}
 .scroll.h .btn.lf{left:0;top:0}

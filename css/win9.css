@@ -260,7 +260,11 @@ select.field{height:22px;padding:1px 2px}
 /* ---------- рабочий стол ---------- */
 #desktop{position:absolute;left:0;right:0;top:0;bottom:28px;background:var(--teal);overflow:hidden}
 #deskIcons{position:absolute;inset:0}
-.dicon{position:absolute;width:75px;padding:2px;text-align:center;color:#fff;line-height:12px}
+/* Подписи значков — белый текст с чёрной тенью. Именно так в Windows 95:
+   тень держит читаемость на любых обоях. Без неё на белом столе контраст
+   был 1.0 — текст просто исчезал, на бирюзовом 2.6 — читался плохо. */
+.dicon{position:absolute;width:75px;padding:2px;text-align:center;color:#fff;line-height:12px;
+  text-shadow:1px 1px 0 #000,-1px 1px 0 #000,1px -1px 0 #000,-1px -1px 0 #000,0 1px 0 #000,1px 0 0 #000,0 -1px 0 #000,-1px 0 0 #000}
 /* подпись мельче и сжата по ширине: длинные названия («Обозреватель Интернета»)
    влезали в 3 строки и выталкивали значки за панель задач */
 .dicon .lbl{display:inline-block;padding:1px 2px;word-break:break-word;font-size:11px;letter-spacing:-.2px}
@@ -303,7 +307,17 @@ select.field{height:22px;padding:1px 2px}
 
 /* ---------- иконки (рисуются CSS) ---------- */
 .ico{position:relative;display:inline-block}
-.ico .body{position:absolute;inset:0;background:#fff;border:1px solid #000}
+/* Раньше здесь стояло background:#fff и border:1px solid #000. Селектор
+   .ico .body весит больше, чем .i-папка, поэтому ВСЕ иконки становились
+   белыми квадратами: жёлтая папка, серый компьютер, светлый корзины.
+   Стиль иконки задаёт её собственный класс, а подложка нужна только тем,
+   у кого класса нет. */
+.ico .body{position:absolute;inset:0}
+.ico .body:not([class*="i-"]){background:#fff;border:1px solid #000}
+/* Объём: в Windows 95 иконки не плоские — у них светлая грань сверху-слева
+   и тёмная снизу-справа. Тёмным (dos, диск, медиа) такая грань не нужна. */
+.ico .body[class*="i-"]:not(.i-dos):not(.i-disk):not(.i-media){
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.6),inset -1px -1px 0 rgba(0,0,0,.22)}
 .i-folder{background:#e8c860;border:1px solid #6b4a00;border-radius:1px}
 .i-folder::before{content:"";position:absolute;left:0;top:-3px;width:11px;height:4px;background:#e8c860;
   border:1px solid #6b4a00;border-bottom:0}

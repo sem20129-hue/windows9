@@ -246,8 +246,10 @@ select.field{height:22px;padding:1px 2px}
 /* ---------- рабочий стол ---------- */
 #desktop{position:absolute;left:0;right:0;top:0;bottom:28px;background:var(--teal);overflow:hidden}
 #deskIcons{position:absolute;inset:0}
-.dicon{position:absolute;width:75px;padding:2px;text-align:center;color:#fff;line-height:14px}
-.dicon .lbl{display:inline-block;padding:1px 2px;word-break:break-word}
+.dicon{position:absolute;width:75px;padding:2px;text-align:center;color:#fff;line-height:12px}
+/* подпись мельче и сжата по ширине: длинные названия («Обозреватель Интернета»)
+   влезали в 3 строки и выталкивали значки за панель задач */
+.dicon .lbl{display:inline-block;padding:1px 2px;word-break:break-word;font-size:11px;letter-spacing:-.2px}
 .dicon.sel .lbl{background:var(--sel);outline:1px dotted #ffff00}
 .marquee{position:absolute;border:1px dotted #fff;background:rgba(255,255,255,.18);pointer-events:none;z-index:5}
 .dicon .ico{margin-bottom:2px}

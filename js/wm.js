@@ -418,9 +418,39 @@ function renderDesktopIcons() {
   const layer = Q('#deskIcons');
   layer.innerHTML = '';
   const pos = {};
+  /* Сетка значков считается по высоте САМОЙ ДЛИННОЙ подписи в колонке.
+     Раньше шаг был жёсткие 62 px, а «Обозреватель Интернета» занимал
+     158 px — следующий значок наезжал на подпись на 26 px. */
+  const COLS = 8, COL_W = 78, ICON_H = 34, LBL_LINE = 12, GAP = 1, TOP0 = 4;
+  /* Число строк меряем по-настоящему: канвас не даёт метрики переноса,
+     поэтому рисуем подпись во временный элемент той же ширины и смотрим
+     высоту. Прикидка «сколько символов влезет» врала и роняла сетку. */
+  const measure = document.createElement('div');
+  measure.style.cssText = 'position:absolute;visibility:hidden;width:75px;padding:2px;';
+  measure.className = 'dicon';
+  const probe = el('div', { cls: 'lbl' });
+  measure.appendChild(probe);
+  layer.appendChild(measure);
+  const lineCount = s => {
+    probe.textContent = s;
+    return Math.max(1, Math.round(probe.getBoundingClientRect().height / LBL_LINE));
+  };
+  const rowTop = [];
+  let y = TOP0, row = 0;
+  while (row < COLS) {
+    rowTop[row] = y;
+    let maxLines = 1;
+    for (let c = 0; c < DESK_ICONS.length; c++) {
+      const r = c % COLS;
+      if (r === row) maxLines = Math.max(maxLines, lineCount(DESK_ICONS[c].label));
+    }
+    y += ICON_H + maxLines * LBL_LINE + GAP;
+    row++;
+  }
+  measure.remove();
   DESK_ICONS.forEach((it, i) => {
-    const col = Math.floor(i / 8), row = i % 8;
-    const node = el('div', { cls: 'dicon', style: 'left:' + (8 + col * 78) + 'px;top:' + (8 + row * 62) + 'px', attrs: { 'data-key': it.key } }, [
+    const col = Math.floor(i / COLS), row = i % COLS;
+    const node = el('div', { cls: 'dicon', style: 'left:' + (8 + col * COL_W) + 'px;top:' + rowTop[row] + 'px', attrs: { 'data-key': it.key } }, [
       el('div', { cls: 'ico', style: 'margin:0 auto;width:32px;height:32px' }, [el('div', { cls: 'body ' + it.icon, style: 'width:32px;height:32px' })]),
       el('div', { cls: 'lbl', text: it.label })
     ]);
